@@ -121,6 +121,141 @@ http://localhost:8085/sb/download.jsp
 
 
 
+step 14 注册及配置拦截器
+http://localhost:8085/sb/download.jsp
+
+
+springboot
+拦截器
+拦截器特点：
+1. 请求到达会经过拦截器，响应回来同样经过拦截器
+2. 拦截器可以拦截controller , 不能拦截jsp请求
+3. 拦截器可以中断用户请求
+
+拦截器作用：
+   将共有代码放到拦截器中 ，减少代码量
+
+spring mvc 中的拦截器
+1.  写一个类实现  HandlerInterceptor
+    preHandler
+	postHandler
+	afterCompletion
+2. 配置拦截器
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/userAjax/*"></mvc:mapping>
+            <ref bean="myInterceptor"></ref>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+
+springboot 中的拦截器
+1.  写一个类实现  HandlerInterceptor 在包 com/tz/leo/interceptor 中
+    preHandler
+	postHandler
+	afterCompletion
+2. 注解方式配置拦截器
+  写一个配置类  InterceptConfig  在包  com/tz/leo/config 中
+  public class InterceptConfig extends WebMvcConfigurerAdapter {
+     public void addInterceptors(InterceptorRegistry registry) {
+            registry.addInterceptor(myInterceptor)
+                    .addPathPatterns("/file/**")             //controller 下file路径下的 所有操作要执行 此拦截
+                    .excludePathPatterns("/file/upload")     //                 除了upload方法以外
+                    ;
+     }
+  }
+
+配置文件上传不经过拦截器
+文件下载经过拦截器
+
+
+
+
+step15  war 打包
+
+1. pom.xml 中的打包方式为 war打包
+   <packaging>war</packaging>
+2. springboot应用中引入springboot官方插件
+3. 排除内嵌的tomcat
+    一共两个
+4。修改入口类
+   public class  Application  extends SpringBootServletInitializer {
+       protected SpringApplicationBuiler configure(SpringApplicationBuilder builer){
+            return builder.source(Application.class);
+       }
+  }
+5.打包项目
+6. D:\Program Files (x86)\Apache Software Foundation\Tomcat 9.0\webapps
+7.
+  执行下面路径下startup 启动 tomcat , 会自动将 step6 下面的 springboot.war 解压为文件夹
+ D:\Program Files (x86)\Apache Software Foundation\Tomcat 9.0\bin\startup.bat
+
+8.
+ 注意此时的 端口号为 tomcat9 的端口号，不是测试的端口号
+ http://localhost:8089/springboot/upload.jsp
+
+
+*****************************************************************************************
+*****************************************************************************************
+*****************************************************************************************
+*****************************************************************************************
+*****************************************************************************************
+注意15 部的war打包有两处配置与前面14处不可以共用
+1.  pom.xml 文件
+
+ <!--*****************************正常idea开发用此配置 ******************************************-->
+    <!--增加jsp解析器-->
+    <dependency>
+      <groupId>org.apache.tomcat.embed</groupId>
+      <artifactId>tomcat-embed-jasper</artifactId>
+    </dependency>
+
+   <!-- war打包需要用下面替换上面一个-->
+
+    <!--***************************  war打包用此配置配置    *********************************-->
+    <!--增加jsp解析器-->
+  <dependency>
+      <groupId>org.apache.tomcat.embed</groupId>
+      <artifactId>tomcat-embed-jasper</artifactId>
+      <scope>provided</scope> &lt;!&ndash; provided表示在当前环境中使用 war打包时有不会打包到war包里面&ndash;&gt;
+    </dependency>
+
+    &lt;!&ndash;为什么多了这个，因为 spring-boot-starter-tomcat 包含在 spring-boot-starter-web 里面&ndash;&gt;
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-tomcat</artifactId>
+      <scope>provided</scope> &lt;!&ndash; provided表示在当前环境中使用 war打包时有不会打包到war包里面&ndash;&gt;
+    </dependency>
+
+
+2.Application 启动文件
+正常idea开发用此配置
+public class Application  {
+
+    public static void main(String[] args) {
+        System.out.println(args);
+        SpringApplication.run(Application.class, args);
+
+    }
+}
+
+
+如下配置为 war打包配置  ，暂时不用
+public class Application extends SpringBootServletInitializer {
+
+    // war 打包步骤之一
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+        return builder.sources(Application.class); //指定入口类类对象即可
+    }
+
+    public static void main(String[] args) {
+        System.out.println(args);
+        SpringApplication.run(Application.class, args);
+    }
+}
+
+
 
 
 
