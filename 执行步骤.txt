@@ -1,0 +1,127 @@
+
+
+step1
+http://localhost:8085/sb/hello01/hello01
+没有@ResponseBody 注释 表示转到hello01.jsp这个页面
+
+
+step2
+http://localhost:8085/sb/hello01/hello02
+使用@ResponseBody注释 表示将结果转换为Json格式返回前台
+
+
+step3
+http://localhost:8085/sb/hello02/hello01
+RestController  等于： @Controller + @ResponseBody
+
+
+step4
+http://localhost:8085/sb/hello03/hello01
+com.tz.leo.springboot.config.BeansConfig.java
+@Configuration
+@Bean
+以上两个标签用于配置spring引入第三方jar包的类，像使用本地类一样使用第三方类
+
+
+step05
+http://localhost:8085/sb/hello04/hello01
+@Value("${name}") 方式从application.yml 中注入数值 ，包括注入
+基本类型注入
+数组 注入
+集合 注入
+map 注入
+
+
+step06
+http://localhost:8085/sb/hello05/hello01
+给类实例注入application.yml 中的值，
+user 是一个一个注入
+user02 是@ConfigurationProperties(prefix = "user")批量注入
+
+
+step07
+http://localhost:8085/sb/user4mybatis/showAll
+springboot 结合 mybatis 展示列表示例
+
+
+step08
+http://localhost:8085/sb/user4mybatis/save?name=TTT&age=13&bir=2020/12/12
+springboot 结合 mybatis 添加数据后重定向到列表显示数据
+
+
+
+step09
+springboot 结合 mybatis  添加异常数据，无法重定向，但是正常回滚，说明事务生效测试
+
+修改 User4mybatisServiceImpl  的save 方法，添加除零异常 int i= 1/0;
+http://localhost:8085/sb/user4mybatis/save?name=TTT&age=13&bir=2020/12/12
+由于有错误所以无法跳到下面页面，并且会报 下下面的********by zero错误
+--------------------------------------------------------
+localhost:8085/sb/user4mybatis/showAll
+--------------------------------------------------------
+Sun Jul 12 15:29:24 CST 2020
+There was an unexpected error (type=Internal Server Error, status=500).
+/ by zero
+
+
+
+
+
+step10 开启jsp热部署
+无需重启，改变实时显示到ui,刷新UI就可以了
+server:
+  jsp-servlet:
+    init-parameters:
+      development: true
+
+
+step11 开启全局热部署
+a.) 引入依赖
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-devtools</artifactId>
+      <optional>true</optional>
+    </dependency>
+b.) 开启idea自动编译功能
+c.) 开启idea运行中修改文件
+d.) 重启项目
+
+
+step12 面向切面编程
+http://localhost:8085/sb/user4mybatis/showAll
+services.***Impl 方法执行前都会执行 AspectTest.beforeTest方法的内容
+@Component
+@Aspect
+public class AspectTest {
+    @Before(value = "within(com.tz.leo.springboot.services.*Impl)")
+    public void beforeTest(){
+        System.out.println("***************这个是面向切面编程before方法打印内容*************");
+    }
+}
+
+
+step13  文件上传
+
+http://localhost:8085/sb/upload.jsp
+
+      <!--引入commons-fileUpload  用于文件上传-->
+      <dependency>
+          <groupId>commons-fileupload</groupId>
+          <artifactId>commons-fileupload</artifactId>
+          <version>1.3.2</version>
+      </dependency>
+
+import org.springframework.web.multipart.MultipartFile;
+MultipartFile 用于文件上传
+
+
+step13  文件下载
+
+http://localhost:8085/sb/download.jsp
+
+
+
+
+
+
+

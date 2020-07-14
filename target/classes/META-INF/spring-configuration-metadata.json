@@ -1,0 +1,62 @@
+{
+  "hints": [],
+  "groups": [
+    {
+      "sourceType": "com.tz.leo.springboot.entity.User02",
+      "name": "user",
+      "type": "com.tz.leo.springboot.entity.User02"
+    },
+    {
+      "sourceType": "com.tz.leo.springboot.entity.User03",
+      "name": "user03",
+      "type": "com.tz.leo.springboot.entity.User03"
+    }
+  ],
+  "properties": [
+    {
+      "sourceType": "com.tz.leo.springboot.entity.User02",
+      "name": "user.age",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com.tz.leo.springboot.entity.User02",
+      "name": "user.bir",
+      "type": "java.util.Date"
+    },
+    {
+      "sourceType": "com.tz.leo.springboot.entity.User02",
+      "name": "user.id",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.tz.leo.springboot.entity.User02",
+      "name": "user.namea",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.tz.leo.springboot.entity.User03",
+      "name": "user03.age",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com.tz.leo.springboot.entity.User03",
+      "name": "user03.bir",
+      "type": "java.util.Date"
+    },
+    {
+      "sourceType": "com.tz.leo.springboot.entity.User03",
+      "name": "user03.id",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.tz.leo.springboot.entity.User03",
+      "name": "user03.maps",
+      "type": "java.util.Map<java.lang.String,java.lang.String>"
+    },
+    {
+      "sourceType": "com.tz.leo.springboot.entity.User03",
+      "name": "user03.namea",
+      "type": "java.lang.String"
+    }
+  ]
+}
