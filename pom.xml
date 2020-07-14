@@ -52,11 +52,45 @@
       <optional>true</optional>
     </dependency>
 
+    <!--*****************************                ******************************************-->
+    <!--*****************************                ******************************************-->
+    <!--*****************************                ******************************************-->
+    <!--*****************************                ******************************************-->
+    <!--*****************************                ******************************************-->
+    <!--*****************************                ******************************************-->
+
+    <!--*****************************正常idea开发用此配置 ******************************************-->
     <!--增加jsp解析器-->
     <dependency>
       <groupId>org.apache.tomcat.embed</groupId>
       <artifactId>tomcat-embed-jasper</artifactId>
     </dependency>
+
+   <!-- war打包需要用下面替换上面一个-->
+
+    <!--***************************  war打包用此配置配置    *********************************-->
+    <!--增加jsp解析器-->
+  <!--  <dependency>
+      <groupId>org.apache.tomcat.embed</groupId>
+      <artifactId>tomcat-embed-jasper</artifactId>
+      <scope>provided</scope> &lt;!&ndash; provided表示在当前环境中使用 war打包时有不会打包到war包里面&ndash;&gt;
+    </dependency>
+
+    &lt;!&ndash;为什么多了这个，因为 spring-boot-starter-tomcat 包含在 spring-boot-starter-web 里面&ndash;&gt;
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-tomcat</artifactId>
+      <scope>provided</scope> &lt;!&ndash; provided表示在当前环境中使用 war打包时有不会打包到war包里面&ndash;&gt;
+    </dependency>
+-->
+    <!--***********************************************************************-->
+
+    <!--*****************************                ******************************************-->
+    <!--*****************************                ******************************************-->
+    <!--*****************************                ******************************************-->
+    <!--*****************************                ******************************************-->
+    <!--*****************************                ******************************************-->
+    <!--*****************************                ******************************************-->
 
     <!--springboot mybatis 依赖-->
     <dependency>
@@ -114,18 +148,27 @@
   <build>
     <finalName>springboot</finalName>
     <plugins>
+
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <source>1.8</source>
-          <target>1.8</target>
-        </configuration>
-      </plugin>
-     <!-- <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
-      </plugin>-->
+        <!--使用热部署出现中文乱码解决方案-->
+        <configuration>
+          <fork>true</fork>
+          <!--增加jvm参数-->
+          <jvmArguments>-Dfile.encoding=UTF-8</jvmArguments>
+          <!--指定入口类-->
+          <mainClass>com.tz.leo.springboot.Application</mainClass>
+        </configuration>
+      </plugin>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <configuration>
+                <source>1.8</source>
+                <target>1.8</target>
+            </configuration>
+        </plugin>
     </plugins>
   </build>
 </project>
