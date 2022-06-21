@@ -42,7 +42,7 @@
     <dependency>
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
-      <version>5.1.38</version>
+      <version>8.0.28</version>
     </dependency>
 
     <!--是否自动提示***.yml文件中的自定义内容 比如输入 user 自动提示 user.namea -->
